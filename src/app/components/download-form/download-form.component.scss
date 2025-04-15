@@ -1,0 +1,148 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.download-form {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    .form-icon {
+      font-size: 2.75rem;
+      width: auto;
+      height: auto;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      margin: 0;
+      color: #1a237e;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-outline {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+    }
+
+    input {
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+    }
+
+    mat-icon {
+      color: #5c6bc0;
+    }
+  }
+
+  .download-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: var(--primary-color);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+
+    &:hover:not([disabled]) {
+      background: var(--secondary-color);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    &[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .download-icon {
+      margin-right: 0.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(2px);
+    }
+  }
+
+  .tips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    color: #607d8b;
+    font-size: 0.9rem;
+
+    mat-icon {
+      font-size: 1.1rem;
+      color: #5c6bc0;
+    }
+  }
+}
+
+/* Animações */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .download-form {
+    padding: 1.25rem;
+    border-radius: 12px;
+
+    .form-header {
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .download-button {
+      font-size: 1rem;
+      padding: 0.9rem;
+    }
+  }
+}

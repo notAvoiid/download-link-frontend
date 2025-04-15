@@ -1,0 +1,59 @@
+<form (ngSubmit)="onSubmit()" class="download-form fade-in">
+  <div class="form-container">
+    <div class="form-header">
+      <mat-icon class="form-icon">music_note</mat-icon>
+      <h2>Conversor YouTube MP3</h2>
+    </div>
+
+    <div class="input-container">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>URL do YouTube</mat-label>
+        <input
+          matInput
+          placeholder="https://youtu.be/..."
+          [formControl]="urlControl"
+          class="url-input"
+        >
+        <mat-icon matPrefix>link</mat-icon>
+        
+        <mat-error *ngIf="urlControl.hasError('required')">
+          <mat-icon>warning</mat-icon>
+          Campo obrigatório
+        </mat-error>
+        <mat-error *ngIf="urlControl.hasError('pattern')">
+          <mat-icon>link_off</mat-icon>
+          URL do YouTube inválida
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="button-container">
+      <button
+        mat-flat-button
+        type="submit"
+        [disabled]="urlControl.invalid || isLoading"
+        class="download-button"
+        matTooltip="Clique para iniciar a conversão"
+        [matTooltipDisabled]="!urlControl.invalid"
+      >
+        <mat-icon class="download-icon">download_for_offline</mat-icon>
+        <span class="button-text">
+          {{ isLoading ? 'Convertendo...' : 'Iniciar Conversão' }}
+        </span>
+        
+        <div class="loading-overlay" *ngIf="isLoading">
+          <mat-progress-spinner
+            diameter="24"
+            mode="indeterminate"
+            color="accent"
+          ></mat-progress-spinner>
+        </div>
+      </button>
+    </div>
+
+    <div class="tips">
+      <mat-icon>info</mat-icon>
+      <span>Suporte a vídeos e playlists</span>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,61 @@
+<mat-card *ngIf="currentStatus" class="status-card fade-in" [@statusAnimation]>
+  <div class="status-content">
+    <div class="status-icon" [ngSwitch]="currentStatus">
+      <mat-progress-spinner
+        *ngSwitchCase="'IN_PROGRESS'"
+        diameter="40"
+        mode="indeterminate"
+        color="accent"
+        class="spinner"
+      ></mat-progress-spinner>
+
+      <div *ngSwitchCase="'COMPLETED'" class="status-success">
+        <mat-icon class="success-icon animate-pop">task_alt</mat-icon>
+        <div class="pulse-effect"></div>
+      </div>
+
+      <div *ngSwitchCase="'FAILED'" class="status-error">
+        <mat-icon class="error-icon animate-shake">error</mat-icon>
+      </div>
+
+      <mat-icon *ngSwitchDefault class="info-icon">info</mat-icon>
+    </div>
+
+    <div class="text-container">
+      <h3 class="status-title">
+        {{ statusMessages[currentStatus] }}
+      </h3>
+      
+      <p class="status-detail" *ngIf="currentStatus === 'IN_PROGRESS'">
+        <span class="processing-text">Processando seu pedido...</span>
+        <br>
+        <small class="time-estimate">Tempo estimado: 1-3 minutos</small>
+      </p>
+
+      <p class="status-detail" *ngIf="currentStatus === 'COMPLETED'">
+        Arquivo disponível na pasta de downloads
+      </p>
+
+      <p class="status-detail" *ngIf="currentStatus === 'FAILED'">
+        Tente novamente ou verifique a URL
+      </p>
+    </div>
+
+    <button 
+      mat-icon-button 
+      class="close-button"
+      (click)="currentStatus = null"
+      *ngIf="currentStatus !== 'IN_PROGRESS'"
+      matTooltip="Fechar notificação"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-progress-bar
+    *ngIf="currentStatus === 'IN_PROGRESS'"
+    mode="indeterminate"
+    color="accent"
+    class="global-progress"
+  ></mat-progress-bar>
+</mat-card>
