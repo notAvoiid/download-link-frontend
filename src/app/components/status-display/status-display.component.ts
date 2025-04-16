@@ -1,5 +1,4 @@
-// status-display.component.ts
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DownloadStatus, YoutubeDownloadService } from '../../service/youtube-download.service';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -33,36 +32,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './status-display.component.html',
   styleUrls: ['./status-display.component.scss']
 })
-export class StatusDisplayComponent implements OnInit, OnDestroy {
-  currentStatus: DownloadStatus | null = null;
-  private statusSubscription!: Subscription;
-
-  statusMessages = {
+export class StatusDisplayComponent {
+  statusMessages: Record<DownloadStatus, string> = {
     STARTING: 'Iniciando conversão...',
     IN_PROGRESS: 'Conversão em andamento...',
     COMPLETED: 'Conversão concluída! 🎉',
-    ALREADY_EXISTS: 'Arquivo já existe ✅',
     FAILED: 'Falha na conversão ⚠️'
   };
 
-  constructor(private downloadService: YoutubeDownloadService) {}
-
-  ngOnInit() {
-    this.statusSubscription = this.downloadService.status$.subscribe({
-      next: (status) => {
-        this.currentStatus = status?.status || null;
-      },
-      error: (err) => console.error('Erro no status:', err)
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.statusSubscription) {
-      this.statusSubscription.unsubscribe();
-    }
-  }
+  downloadService = inject(YoutubeDownloadService);
 
   clearStatus() {
-    this.currentStatus = null;
+    // Lógica para limpar status, pode ser ajustada conforme necessário
+  }
+
+  get estimatedTime(): string {
+    return '1-3 minutos';  // Pode ser dinâmico se você souber a duração do download
   }
 }
