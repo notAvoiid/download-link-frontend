@@ -33,6 +33,7 @@
         type="submit"
         [disabled]="urlControl.invalid || isLoading"
         class="download-button"
+        [class.is-loading]="isLoading"
         matTooltip="Clique para iniciar a conversão"
         [matTooltipDisabled]="!urlControl.invalid"
       >
