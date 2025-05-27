@@ -43,10 +43,10 @@ export class StatusDisplayComponent {
   downloadService = inject(YoutubeDownloadService);
 
   clearStatus() {
-    // Lógica para limpar status, pode ser ajustada conforme necessário
+    this.downloadService.clearStatus();
   }
 
   get estimatedTime(): string {
-    return '1-3 minutos';  // Pode ser dinâmico se você souber a duração do download
+    return '1-3 minutos';  
   }
 }

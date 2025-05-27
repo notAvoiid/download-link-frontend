@@ -15,7 +15,8 @@
           class="url-input"
         >
         <mat-icon matPrefix>link</mat-icon>
-        
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+
         <mat-error *ngIf="urlControl.hasError('required')">
           <mat-icon>warning</mat-icon>
           Campo obrigatório
@@ -54,7 +55,7 @@
 
     <div class="tips">
       <mat-icon>info</mat-icon>
-      <span>Suporte a vídeos e playlists</span>
+      <span>Suporte a vídeos</span>
     </div>
   </div>
 </form>

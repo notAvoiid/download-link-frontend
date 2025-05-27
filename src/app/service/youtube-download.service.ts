@@ -6,13 +6,11 @@ import {
   catchError,
   interval,
   map,
-  mapTo,
   switchMap,
   throwError,
   tap,
   takeWhile,
   finalize,
-  defer,
   timer,
 } from 'rxjs';
 
@@ -90,5 +88,9 @@ export class YoutubeDownloadService {
         a.click();
         window.URL.revokeObjectURL(url);
       });
+  }
+
+  clearStatus(): void {
+    this.statusSubject.next(null);
   }
 }
