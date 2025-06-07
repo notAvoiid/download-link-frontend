@@ -20,7 +20,9 @@ export type DownloadStatus = 'STARTING' | 'IN_PROGRESS' | 'COMPLETED' | 'FAILED'
 export class YoutubeDownloadService {
   private http = inject(HttpClient);
   private statusSubject = new BehaviorSubject<{ status: DownloadStatus } | null>(null);
-
+  
+  private readonly API_BASE_URL = 'http://localhost:8080/api';
+ 
   status$ = this.statusSubject.asObservable();
 
   startDownload(url: string): Observable<{ filePath: string; status: DownloadStatus }> {
@@ -32,7 +34,9 @@ export class YoutubeDownloadService {
   
     return delayBeforeInProgress.pipe(
       switchMap(() =>
-        this.http.post<{ filePath: string; status: DownloadStatus }>('/api/download', { url }).pipe(
+        this.http.post<{ filePath: string; status: DownloadStatus }>(`${this.API_BASE_URL}/download`, { url }, {
+          headers: { 'Content-Type': 'application/json' },
+        }).pipe(
           switchMap(response =>
             this.pollStatus(url).pipe(
               map(finalStatus => ({
@@ -52,9 +56,8 @@ export class YoutubeDownloadService {
     );
   }
   
-  
   getDownloadStatus(url: string): Observable<DownloadStatus> {
-    return this.http.get<{ status: DownloadStatus }>('/api/status', {
+    return this.http.get<{ status: DownloadStatus }>(`${this.API_BASE_URL}/status`, {
       params: { url },
     }).pipe(
       map(response => response.status)
@@ -72,8 +75,8 @@ export class YoutubeDownloadService {
 
   downloadFile(filePath: string): void {
     const filename = filePath.split('/').pop() || 'audio.mp3';
-
-    this.http.get(`/api/download/${filename}`, { responseType: 'blob' })
+    
+    this.http.get(`${this.API_BASE_URL}/download/${filename}`, { responseType: 'blob' })
       .pipe(
         catchError(err => {
           console.error('File download failed:', err);
